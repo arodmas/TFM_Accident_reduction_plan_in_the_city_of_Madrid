@@ -1,0 +1,28 @@
+01.- a131019: Transcribir anotaciones en git sobre estudio y pruebas del proyecto, entiendo que viable.
+
+Describir origen de los datos: 
+
+   Portal de datos abiertos del Ayuntamiento de Madrid:
+   * https://datos.madrid.es/portal/site/egob
+
+   Accidentes de tráfico de la Ciudad de Madrid:
+   * https://datos.madrid.es/sites/v/index.jsp?vgnextoid=7c2843010d9c3610VgnVCM2000001f4a900aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD
+
+Tareas:
+
+Ok .- Incluir en el repo los ficheros del dataset (01_Originals_data) como medida de backup. Su formato de origen es excell, desde el año 2010 al 2019 inclusives. También se incluye la explicación de estructura de ficheros del 2010 añ 2018 y la del 2019.
+
+Pdte .- Preparar descarga automatica desde la web origen mediante la libreria de Python openpyxl para leer y escribir ficheros Excel 2010 xlsx/xlsm/xltx/xltm 
+
+Running .- Leer fichero xlsx de muestra (2010). Sustituyo nombres de columna en la lectura como primer filtro de la estructura de los datos acordada.
+	* Podría tratar todo esto con excell para Python, pero así practico más,
+
+Columnas originales:
+FECHA	RANGO HORARIO	DIA SEMANA	DISTRITO	LUGAR ACCIDENTE	Nº	Nº PARTE	CPFA Granizo	CPFA Hielo	CPFA Lluvia	CPFA Niebla	CPFA Seco	CPFA Nieve	CPSV Mojada	CPSV Aceite	CPSV Barro	CPSV Grava Suelta	CPSV Hielo	CPSV Seca Y Limpia	Nº VICTIMAS *	TIPO ACCIDENTE	Tipo Vehiculo	TIPO PERSONA	SEXO	LESIVIDAD	Tramo Edad
+
+Columnas estipuladas:
+FECHA	RANGO_HORARIO	DIA_SEMANA	DISTRITO	LUGAR_ACCIDENTE	BORRAR	BORRAR		BORRAR 		BORRAR		BORRAR		BORRAR		BORRAR		BORRAR		BORRAR		BORRAR		BORRAR		BORRAR			BORRAR		BORRAR			NUM_PERSONAS	TIPO_ACCIDENTE	TIPO_VEHICULO	TIPO_PERSONA	SEXO	LESIVIDAD	TRAMO_EDAD
+
+    df = pd.read_excel('example.xlsx',
+                     sheet_name='example',
+                     names=['UID', 'First Name', 'Last Name', 'Age', 'Sales #1', 'Sales #2'])
