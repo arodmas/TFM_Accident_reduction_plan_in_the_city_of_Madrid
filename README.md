@@ -1,2 +1,341 @@
 # TFM_Accident_reduction_plan_in_the_city_of_Madrid
 KSCHOOL TFM project about accident reduction plan in the city of Madrid
+
+00.- Proyect Title: 
+--------------------------------------------------------------------------------------------------------------------------------
+.- TFM_Accident_reduction_plan_in_the_city_of_Madrid
+    (Traffic accidents in the City of Madrid registered by the Municipal Police with victims and / or damage to heritage)
+
+--- x --- a little job for other big goals --- x ---
+
+01.- Describe data source:
+--------------------------------------------------------------------------------------------------------------------------------
+.- Ayuntamiento de Madrid portal's open data
+* https://datos.madrid.es/portal/site/egob
+
+.- Traffic accidents of Madrid city
+* https://datos.madrid.es/sites/v/index.jsp?vgnextoid=7c2843010d9c3610VgnVCM2000001f4a900aRCRD&vgnextchannel=374512b9ace9f310VgnVCM100000171f5a0aRCRD
+
+.- Files:
+* EPA application of policy on Excell format since the year 2010 until 2019 with estructure explication of these files.
+
+.- Original Structures:
+* These files have 1 row for implicated person in a traffic accident of Madrid city
+* View files: 01_Originals_data/Estructura_DS_Accidentes_trafico_2010_2018.pdf
+              01_Originals_data/Estructura_DS_Accidentes_trafico_desde_2019.pdf  
+
+.- Originals columns of the files:
+FECHA	RANGO HORARIO	DIA SEMANA	DISTRITO	LUGAR ACCIDENTE	Nº	Nº PARTE	CPFA Granizo	CPFA Hielo	CPFA Lluvia	CPFA Niebla	CPFA Seco	CPFA Nieve	CPSV Mojada	CPSV Aceite	CPSV Barro	CPSV Grava Suelta	CPSV Hielo	CPSV Seca Y Limpia	Nº VICTIMAS *	TIPO ACCIDENTE	Tipo Vehiculo	TIPO PERSONA	SEXO	LESIVIDAD	Tramo Edad
+
+.- Estipulated columns for the dataframes:
+FECHA	RANGO_HORARIO	DIA_SEMANA	DISTRITO	BORRAR 	BORRAR	BORRAR		BORRAR 		BORRAR		BORRAR		BORRAR		BORRAR		BORRAR		BORRAR		BORRAR		BORRAR		BORRAR			BORRAR		BORRAR			NUM_PERSONAS	TIPO_ACCIDENTE	TIPO_VEHICULO	TIPO_PERSONA	SEXO	LESIVIDAD	TRAMO_EDAD
+
+
+.- Data files: 01_Originals_data/2010_Accidentalidad.xlsx
+               01_Originals_data/2011_Accidentalidad.xlsx
+               01_Originals_data/2012_Accidentalidad.xlsx
+               01_Originals_data/2013_Accidentalidad.xlsx
+               01_Originals_data/2014_Accidentalidad.xlsx
+               01_Originals_data/2015_Accidentalidad.xlsx
+               01_Originals_data/2016_Accidentalidad.xlsx
+               01_Originals_data/2017_Accidentalidad.xlsx
+               01_Originals_data/2018_Accidentalidad.xlsx
+               01_Originals_data/2019_Accidentalidad.xlsx (pending)               
+
+02.- Pending Tasks:
+--------------------------------------------------------------------------------------------------------------------------------
+.- Automatic download from web data source with Python's library "openpyxl" for read and write Excell 2010 files (xlsx/xlsm/xltx/xltm)
+.- Include file for the year 2019
+.- Fix data format labeled: CAIDA_VEHICULO_ 3_ RUEDAS
+                          , CIUDAD LINEAL
+                          , FUENCARRAL-EL PARDO
+                          , SAN BLAS
+                          , VILLA DE VALLECAS
+                          , VEH.3 RUEDAS
+                          , in df_accs["TIPO_ACCIDENTE"].unique(); OTRAS CAUSAS x NO ASIGNADO
+                          , Filter wrong: (60 if x <= 50 x (60 if x <= 60
+
+03.- Development:
+--------------------------------------------------------------------------------------------------------------------------------
+##########################################################################
+# Could try everything with Python for Excell, but I practice more.
+##########################################################################
+
+.- Total time of executing:
+
+* Time executing: 14secs
+
+* Time executing: 4minutes 08secs
+* Time executing: 06minutes 32secs
+
+#======================
+# .- Workflow 01:
+#======================
+03-.01.- Execute notebook:    03_Presentation/01_loading_and_preprocessing_original_data_sample.ipynb
+
+* Time executing: 14secs
+
+### * Line of progress:
+---------------------------------------------------------------------------------------
+
+# Active system's automagic
+# Load work environment
+# Load library for work and analitics data
+# Read from excel file sample with column names stipulated and transform them
+# View first rows
+# Check dimesion	
+# Check duplicted values
+# Delete surplus columns that start with ...
+# Check dimesion	
+# View first rows more extended
+# View types
+# View columns
+# Sustitute NaN for "NO_ASIGNADO"
+# Check NULL values
+# Check duplicted values
+# Review duplicated values and the group rebuilding them by index
+# Review relationships
+# Strip leading and trailing space
+# Review unique data per column
+# View types
+# Observations count	
+# Manipulate "RANGO_HORARIO" column for preprocesing data format
+# Order columns
+# Manipulate "FECHA" column for preprocesing data format
+# View types
+# Manipulate "TRAMO_EDAD" column for preprocesing data format
+# Check NULL values
+# Delete surplus columns
+# Review unique data per column
+# Delete surplus columns
+# Check NULL values
+# Transform data replacing values
+# Check NULL values
+# Review duplicated
+# Manipulate "DIA_SEMANA" column for preprocesing data format
+# Manipulate "DISTRITO" column for preprocesing data format
+# Manipulate "NUM_PERSONAS" column for preprocesing data format
+# Manipulate "TIPO_ACCIDENTE" column for preprocesing data format
+# Manipulate "TIPO_VEHICULO" column for preprocesing data format
+# Manipulate "TIPO_PERSONA" column for preprocesing data format
+# Manipulate "SEXO" column for preprocesing data format
+# Manipulate "LESIVIDAD" column for preprocesing data format
+# Manipulate "HORA_" column for preprocesing data format
+# Manipulate "TRAMO_EDAD" column for preprocesing data format
+# View types
+# Review "NO_ASIGNADO" values of columns
+# and replace with 999 by transformer from "TRAMO_EDAD"	to "EDAD_APROX" in range agreement
+# and replace with others labels by transformer "LESIVIDAD" in range agreement
+# Replace with others labels by transformer "SEXO" in range agreement
+# Replace with others labels by transformer "TIPO_PERSONA" in range agreement
+# Replace with others labels by transformer "TIPO_VEHICULO" in range agreement
+# Replace with others labels by transformer "TIPO_ACCIDENTE" in range agreement
+# Replace with others labels by transformer from "NUM_PERSONAS" to "NUM_PERS_IMPLS" in range agreement in new df for times series probes
+# Merge for time values transformer
+# Reset the index for new df
+# OUT file "01_OUT_csv_filesexport_df_series_tiempo.csv" for Time Series probes
+
+#======================
+# .- Workflow 02:
+#======================
+03-.02.- Execute notebook:    03_Presentation/02_loading_and_preprocessing_original_data_complete.ipynb
+
+* Time executing: 4minutes 08secs
+
+### * Line of progress:
+---------------------------------------------------------------------------------------
+
+# Active system's automagic
+# Load work environment
+# Load library for work and analitics data
+# Read from excel files complete with column names stipulated and transform them
+# (1) Imports
+# (2) File list avoid storing entries in memory simultaneously
+# (3) Initialize empty dataframe
+# (4) Loop over the file list to append to an empty dataframe (1min 8secs)
+# Set Dataframe and exploration
+# Count observations (252998)
+# Save to file: ../03_Presentation/02_OUT_csv_filesexport_datos_accs_madrid.csv
+# Conclusion:
+##################### DAMM Im idiot
+# a16112019 I know that there are few data (45082) that inform in a total range of 252998 for predict
+# Include that I was manipulating biased data
+### Demostration
+# Create a new df (calendario)
+# Start manipulation
+# Convert index the FECHA field
+### Save to file: ../03_Presentation/02_OUT_csv_filesexport_time_series_complete.csv
+# Final manipulation
+# Start exploration
+# Trust relationship for randomness (aleatoriedad) in 0 and correlation between 99% and 95%
+# Stationary serie because it's lower of the 0.5
+# STEP FIRST: Draw time serie for identify of trend and seasonality
+# This function is used to display the graphics
+## import matplotlib.pyplot as mplt
+# Seaborn will be used for graphics style and size will be adjusted default figure 
+# to a more suitable form for time series graphs.
+# Decomposing the time series xa 2010
+# Create line chart of time series complete, using plot method
+# Seasonality
+# Frequency resampling for the daily average
+# Frequency resampling for the weekly average
+# Frequency resampling for the monthly average
+# Daily and weekly time series will be plotted together in a single period of 1 month to compare.
+# Time series of general visualization will be plotted.
+# Sliding windows: superimpose times and “slide” at the same frequency as the data,
+# 	so the transformed time series have the same frequency as the original time series.
+# 	the same weighting (ponderación)
+# Check with Dicky-Fuller test (DF-test) provides a more accurate way to measure
+#   the stationarity of our series. ("Statistic Test" lower than all "Critical Value")
+#   CONCLUSION: NOT stationary series
+# Perform Dickey-Fuller test:
+#   Default: AIC, with regression argument of constant drift (deriva) --> ('c'), centering the serie in 0.
+#   The result indicates that the series is NOT stationary, not being able to reject the null hypothesis 
+#     at 0.05 (5%) by p-value (without accepting the alternative hypothesis that stationarity exists)
+#     Although (aunque) the critical value of the tests (Statistic Test), is smaller than our value level of 
+#     significance of .5 (5%), so we do not have enough evidence to conclude that the unit root does not exist.
+# By differentiation
+# Change the first value NaN to 0 (only 1 for differentiation)
+# Convert data type from float to integer
+#   Perform Dickey-Fuller test:
+#   Default: AIC, with regression argument of constant drift (deriva) --> ('c'), centering the serie in 0.
+#   The result indicates that the series is NOT stationary, not being able to reject the null hypothesis 
+#     at 0.05 (5%) by p-value (without accepting the alternative hypothesis that stationarity exists)
+#     Although (aunque) the critical value of the tests (Statistic Test), is smaller than our value level of 
+#     significance of .5 (5%), so we do not have enough evidence to conclude that the unit root does not exist.
+# Residuals analysis:
+#   the assumption that model errors are a purely random process must be verified
+#   (mean zero, constant variance and no serial correlation), that is, that they haven't structure of
+#   dependence (the residuals must not be correlated to the past, must be independent
+#   of each other) and follow a white noise process.
+# FORECASTING PROBABILY versus ALEATORIEDAD (bandas de Bartlett)
+#################### ARMA: TEST APPLICATION 
+# model that uses the exact maximum probability through the Kalman filter
+# using the method (mle), including constant, with the default solver: limited memory BFGS uses m = 12,
+# printing convergence information for frequency controls during iterations (disp = True),
+# using the default residuals for the best result (start_ar_lags)
+# Plot with statsmodel reducing dimensionality to scalars with squeeze
+# Others tests ... 
+# Create ARIMA object Model Naive, for a configuration (P, D, Q) and train it on our data using the fit method.
+# Create other ARIMA model of a configuration (P, D, Q) and train it on our data using the fit method.
+# Create other ARIMA model of readjustment, for a configuration (P, D, Q) and train it on our data using the fit method.
+# Final mean squared error score (MSE): (ommited because it's a calculate innecesary for final result (time espensive))
+# Daily Serial Frequency Resampling
+#  Plot with statsmodel reducing dimensionality to scalars with squeeze
+# Create other ARIMA model of readjustment, for a configuration (P, D, Q) and train it on our data using the fit method.
+#  Weekly series frequency resampling
+#  Plot with statsmodel reducing dimensionality to scalars with squeeze
+# Create other ARIMA model of readjustment, for a configuration (P, D, Q) and train it on our data using the fit method.
+#  Monthly serial rate resampling
+#  Plot with statsmodel reducing dimensionality to scalars with squeeze
+#  Annual serial rate resampling
+#  Plot with statsmodel reducing dimensionality to scalars with squeeze
+########## CHIMPUM
+# Create other ARIMA model of readjustment, for a configuration (P, D, Q) and train it on our data using the fit method.
+# CONCLUSION I BELIEVE THAT MY DATA ARE FOLLOWED BY COPY / PASTE at the source of the data obtained
+
+#======================
+# .- Workflow 03:
+#======================
+03-.03.- Execute notebook:    03_Presentation/02_loading_and_preprocessing_original_data_complete.ipynb
+
+* Time executing: 06minutes 32secs
+
+### * Line of progress:
+---------------------------------------------------------------------------------------
+# Active system's automagic
+# Load work environment
+# Load library for work and analitics data in ML
+# Read out file "02_OUT_csv_filesexport_datos_accs_madrid.csv"
+# Initial Exploratory Analysis
+#   Now let's see how many columns and records we have
+# Delete surplus columns
+# Some visualizations to better understand the data.
+#   Look at label balancing
+# Check NULL values
+# Group data columns individually per size
+# Review how many rows are there according to "DIA_SEMANA", how central variable.
+# Draw the columns individually by grouped size counter and per pairs
+# Draw some dispersion graph for columns pairs to visualize the lack of information
+# Data mapping
+# Check UNIQUE values
+# Check NULL values
+# Create sample for new dataframe with labeler and OneHotEncoder (10000 rows)
+# Create sample dummy dataframe for get_dummies function
+# Check NULL values
+# Dont limit column display
+# Data Preparation
+#   Load variables with sample data
+#   Train-test split and load the library
+#   Create 2 groups each with input and labels
+#   Create the encoder.
+#   Apply the encoder.
+#   Create a new dataframe for labeler data only
+#   Labeling through Label Encoding
+#   Transforming sample data columns
+#   OUR target class be "DISTRITO" column.
+# Visualizations:
+#   Draw some the histogram plots
+#   And we can also see the interrelation using the pairs chart (scatter plot matrix) -> matriz de diagrama de dispersión
+#   It allows us to see both the distribution of individual variables and the relationships between two variables.
+#   Others combinations plots
+#   View data mapping with numbers
+# Load variables with sample data.
+# Train-test split and load the library
+# Create 2 groups each with input and labels
+# Feature Scaling
+# Create the encoder (by OneHotEncoder)
+#  Assume for simplicity all features are categorical.
+#  Apply the encoder.
+### Logistic Regression with SKLearn
+# Create teh Regression Logistic model and we make it fit (ajuste) to our set of inputs X and outputs "y".
+# We classify our entire set of X inputs using the "predict (X)" method for the model
+#   and we review some of its outputs to see if it matches the actual outputs of our origin
+# Check model efficiency 
+# The Quality of our model, gives us the average accuracy of the predictions: 8,88% (kk)
+### WE ADD NEW VARIABLES TO TRY TO IMPROVE THE MODEL
+# We incorporate a new csv file, downloaded from the same website
+# Data Preparation
+# Strip leading and trailing space only strings
+# Check NULL values
+# We add to our original dataframe the columns that serve us of the new file to identify our dependent variable
+# Convert to object columns (the numeric columns)
+# Load variables
+# Train-test split and load the library
+# Create 2 groups each with input and labels
+# Create the encoder.
+# Assume for simplicity all features are categorical.
+# Apply the encoder.
+### Logistic Regression with SKLearn (2)
+# Create teh Regression Logistic model and we make it fit (ajuste) to our set of inputs X and outputs "y".
+# We classify our entire set of X inputs using the "predict (X)" method for the model
+#   and we review some of its outputs to see if it matches the actual outputs of our origin
+# Check model efficiency 
+# The Quality of our model, gives us the average accuracy of the predictions: 100,00% (ok)
+## VALIDATE MODEL
+# We recompile our Logistic Regression model, at 80% of the input data in 10 partitions 
+# and we calculate the new scoring by cross validation
+# And now we make the predictions (really classification) using our "cross validation set"
+# that is to say of the subset that we had separated.
+# Successes: 100%
+# Model results
+## Matrix of confusion for errors
+## Classification report with our TEST set
+# We observe the average F1-score
+# Classification (or prediction) of new values
+# Test and others parameters:
+# a.- predict: just gives you the class for every example
+# b.- predict_proba: gives you the probability for every class, and predict is just taking the class 
+#     which maximal probability
+# c.- predict_log_proba: gives you the logarithm of the probabilities, this is often handier as probabilities 
+#     can become very, very small shareimprove this answer
+# d.- coef_
+# e.- score	
+# f.- decision function
+# For decode test patterns (just create a copy before transformation)
+# add probability by index
+# eliminate surface and density (although they would be worth us for other calculations)
+######### Visual tests
+# Categorical scatterplots: (box, violin, boxen)
+# Categorical estimate plots: (point, bar)
+####### CHIMPUM FINAL
